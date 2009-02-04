@@ -24,6 +24,16 @@ class Dopplr
     form = page.forms[1]
     page = agent.submit(form, form.buttons.first)
     
-    self.token = page.uri.to_s.match(/token=(.{32})/)[1]
+    @token = page.uri.to_s.match(/token=(.{32})/)[1]
+  end
+  
+  def call(path)
+    http = Net::HTTP.new("www.dopplr.com", 443)
+    http.use_ssl = true
+    http.start do |http|
+      request = Net::HTTP::Get.new(path, { 'Authorization' => 'AuthSub token="' + @token + '"' })
+      response = http.request(request)
+      return response.body
+    end
   end
 end

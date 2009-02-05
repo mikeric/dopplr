@@ -7,7 +7,7 @@ module Dopplr
     attr_reader :email, :password, :token
     attr_writer :token
     
-    def initialize(email, password)
+    def initialize(email=nil, password=nil)
       @email = email
       @password = password
       @token = nil

@@ -1,5 +1,5 @@
 module Dopplr
-  class City < Base
+  class City < Client
     def info(id)
       call "/api/city_info?geoname_id=#{id}"
     end

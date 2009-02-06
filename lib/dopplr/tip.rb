@@ -1,5 +1,5 @@
 module Dopplr
-  class Tip < Base
+  class Tip < Client
     def all(id)
       call "/api/tips?geoname_id=#{id}"
     end

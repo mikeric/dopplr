@@ -1,5 +1,5 @@
 module Dopplr
-  class Traveller < Base
+  class Traveller < Client
     def info(username=nil)
       if username
         call "/api/traveller_info?traveller=#{username}"

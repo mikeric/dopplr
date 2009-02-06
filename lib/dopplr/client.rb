@@ -3,7 +3,7 @@ require 'mechanize'
 require 'cgi'
 
 module Dopplr
-  class Base
+  class Client
     attr_reader :email, :password, :token
     attr_writer :token
     

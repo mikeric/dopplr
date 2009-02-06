@@ -1,5 +1,5 @@
 module Dopplr
-  class Search < Base
+  class Search < Client
     def all(term)
       call "/api/search?q=#{term}"
     end

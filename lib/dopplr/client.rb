@@ -7,12 +7,6 @@ module Dopplr
     attr_reader :email, :password, :token
     attr_writer :token
     
-    def initialize(email=nil, password=nil)
-      @email = email
-      @password = password
-      @token = nil
-    end
-    
     def call(path)
       http = Net::HTTP.new("www.dopplr.com", 443)
       http.use_ssl = true
@@ -27,12 +21,12 @@ module Dopplr
       return "https://www.dopplr.com/api/AuthSubRequest?scope=#{CGI.escape("http://www.dopplr.com/")}&next=#{CGI.escape(url)}&session=1"
     end
     
-    def get_token(url)
+    def get_token(email, password, url)
       agent = WWW::Mechanize.new
       page = agent.get("https://www.dopplr.com/api/AuthSubRequest?scope=#{CGI.escape("http://www.dopplr.com/")}&next=#{CGI.escape(url)}&session=1")
       form = page.forms[1]
-      form.email = @email
-      form.password = @password
+      form.email = email
+      form.password = password
       page = agent.submit(form, form.buttons.first)
       form = page.forms[1]
       page = agent.submit(form, form.buttons.first)

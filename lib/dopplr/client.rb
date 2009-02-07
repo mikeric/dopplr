@@ -4,8 +4,7 @@ require 'cgi'
 
 module Dopplr
   class Client
-    attr_reader :email, :password, :token
-    attr_writer :token
+    attr_accessor :token
     
     def call(path)
       http = Net::HTTP.new("www.dopplr.com", 443)

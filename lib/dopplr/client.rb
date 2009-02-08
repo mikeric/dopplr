@@ -49,6 +49,17 @@ module Dopplr
       return response
     end
     
+    # Performs a search query.
+    def search(term, type=:all)
+      if type == :all
+        call "/api/search?q=#{term}"
+      elsif type == :city
+        call "/api/city_search?q=#{term}"
+      elsif type == :traveller
+        call "/api/traveller_search?q=#{term}"
+      end
+    end
+    
     # Returns a new City object.
     def city(city_id)
       Dopplr::City.new(self, city_id)

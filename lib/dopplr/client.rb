@@ -6,6 +6,11 @@ module Dopplr
   class Client
     attr_accessor :token
     
+    def initialize(token=nil)
+      @token = token
+    end
+    
+    # Makes an API call with @token.
     def call(path)
       http = Net::HTTP.new("www.dopplr.com", 443)
       http.use_ssl = true
@@ -16,10 +21,12 @@ module Dopplr
       end
     end
     
+    # Returns a URL for getting a token.
     def login_url(url)
       return "https://www.dopplr.com/api/AuthSubRequest?scope=#{CGI.escape("http://www.dopplr.com/")}&next=#{CGI.escape(url)}&session=1"
     end
     
+    # Generates a token with login credentials.
     def get_token(email, password, url)
       agent = WWW::Mechanize.new
       page = agent.get("https://www.dopplr.com/api/AuthSubRequest?scope=#{CGI.escape("http://www.dopplr.com/")}&next=#{CGI.escape(url)}&session=1")
@@ -32,6 +39,7 @@ module Dopplr
       @token = page.uri.to_s.match(/token=(.{32})/)[1]
     end
     
+    # Changes @token into a session token.
     def create_session
       response = call('/api/AuthSubSessionToken')
       if response.match(/Token=(.*)/)

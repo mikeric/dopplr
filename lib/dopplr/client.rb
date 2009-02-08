@@ -48,5 +48,9 @@ module Dopplr
       end
       return response
     end
+    
+    def city(city_id)
+      Dopplr::City.new(self, city_id)
+    end
   end
 end

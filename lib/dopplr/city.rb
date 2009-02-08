@@ -1,12 +1,19 @@
 module Dopplr
-  class City < Client
-    def initialize(client, city_id)
+  class City
+    attr_accessor :id
+    
+    def initialize(client, id)
+      @client = client
+      @id = id
       @token = client.token
-      @city_id = city_id
     end
     
     def info
-      call "/api/city_info?geoname_id=#{@city_id}"
+      @client.call "/api/city_info?geoname_id=#{@id}"
+    end
+    
+    def tips
+      @client.call "/api/tips?geoname_id=#{@id}"
     end
   end
 end

@@ -67,5 +67,15 @@ module Dopplr
     def city(city_id)
       Dopplr::City.new(self, city_id)
     end
+    
+    # Returns a new Trip object.
+    def trip(trip_id)
+      Dopplr::Trip.new(self, trip_id)
+    end
+    
+    # Returns a new Traveller object.
+    def traveller(username)
+      Dopplr::Traveller.new(self, username)
+    end
   end
 end

@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'mechanize'
+require 'json'
 require 'cgi'
 
 module Dopplr
@@ -12,6 +13,7 @@ module Dopplr
     
     # Makes an API call with @token.
     def fetch(path, params={})
+      params['format'] = 'js'
       params_uri = URI.escape(params.collect{|key,value| "#{key}=#{value}"}.join('&'))
       url = "/api/#{path}/?#{params_uri}"
       http = Net::HTTP.new("www.dopplr.com", 443)
@@ -19,8 +21,7 @@ module Dopplr
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
       http.start do |http|
         request = Net::HTTP::Get.new(url, { 'Authorization' => 'AuthSub token="' + @token + '"' })
-        data = http.request(request).body
-        return data
+        JSON.parse(http.request(request).body)
       end
     end
     

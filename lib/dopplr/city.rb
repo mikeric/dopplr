@@ -2,18 +2,18 @@ module Dopplr
   class City
     attr_accessor :id
     
-    def initialize(client, id)
+    def initialize(client, city_id)
       @client = client
-      @id = id
+      @id = city_id
       @token = client.token
     end
     
     def info
-      @client.call "/api/city_info?geoname_id=#{@id}"
+      @client.fetch "/api/city_info?geoname_id=#{@id}"
     end
     
     def tips
-      @client.call "/api/tips?geoname_id=#{@id}"
+      @client.fetch "/api/tips?geoname_id=#{@id}"
     end
   end
 end

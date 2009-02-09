@@ -1,6 +1,4 @@
 require 'lib/dopplr/client'
 require 'lib/dopplr/traveller'
-require 'lib/dopplr/trip'
 require 'lib/dopplr/city'
-require 'lib/dopplr/tip'
-require 'lib/dopplr/search'
+require 'lib/dopplr/trip'

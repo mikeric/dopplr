@@ -11,7 +11,7 @@ module Dopplr
     end
     
     # Makes an API call with @token.
-    def call(path)
+    def fetch(path)
       http = Net::HTTP.new("www.dopplr.com", 443)
       http.use_ssl = true
       http.start do |http|
@@ -41,7 +41,7 @@ module Dopplr
     
     # Changes @token into a session token.
     def create_session
-      response = call('/api/AuthSubSessionToken')
+      response = fetch('/api/AuthSubSessionToken')
       if response.match(/Token=(.*)/)
         @token = $1
         return @token
@@ -52,11 +52,11 @@ module Dopplr
     # Performs a search query.
     def search(term, type=:all)
       if type == :all
-        call "/api/search?q=#{term}"
+        fetch "/api/search?q=#{term}"
       elsif type == :city
-        call "/api/city_search?q=#{term}"
+        fetch "/api/city_search?q=#{term}"
       elsif type == :traveller
-        call "/api/traveller_search?q=#{term}"
+        fetch "/api/traveller_search?q=#{term}"
       end
     end
     

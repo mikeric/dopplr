@@ -11,13 +11,16 @@ module Dopplr
     end
     
     # Makes an API call with @token.
-    def fetch(path)
+    def fetch(path, params={})
+      params_uri = URI.escape(params.collect{|key,value| "#{key}=#{value}"}.join('&'))
+      url = "/api/#{path}/?#{params_uri}"
       http = Net::HTTP.new("www.dopplr.com", 443)
       http.use_ssl = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
       http.start do |http|
-        request = Net::HTTP::Get.new(path, { 'Authorization' => 'AuthSub token="' + @token + '"' })
-        response = http.request(request)
-        return response.body
+        request = Net::HTTP::Get.new(url, { 'Authorization' => 'AuthSub token="' + @token + '"' })
+        data = http.request(request).body
+        return data
       end
     end
     
@@ -41,7 +44,7 @@ module Dopplr
     
     # Changes @token into a session token.
     def create_session
-      response = fetch('/api/AuthSubSessionToken')
+      response = fetch('AuthSubSessionToken')
       if response.match(/Token=(.*)/)
         @token = $1
         return @token
@@ -52,11 +55,11 @@ module Dopplr
     # Performs a search query.
     def search(term, type=:all)
       if type == :all
-        fetch "/api/search?q=#{term}"
+        fetch('search', :q => term)
       elsif type == :city
-        fetch "/api/city_search?q=#{term}"
+        fetch('city_search', :q => term)
       elsif type == :traveller
-        fetch "/api/traveller_search?q=#{term}"
+        fetch('traveller_search', :q => term)
       end
     end
     

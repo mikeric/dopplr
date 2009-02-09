@@ -1,59 +1,37 @@
 module Dopplr
-  class Traveller < Client
-    def info(username=nil)
-      if username
-        call "/api/traveller_info?traveller=#{username}"
-      else
-        call "/api/traveller_info"
-      end
+  class Traveller
+    def initialize(client, username)
+      @client = client
+      @username = username
+      @token = client.token
     end
     
-    def fellows(username=nil)
-      if username
-        call "/api/fellows?traveller=#{username}"
-      else
-        call "/api/fellows"
-      end
+    def info
+      @client.fetch('traveller_info', :traveller => @username)
     end
     
-    def trips(username=nil)
-      if username
-        call "/api/trips_info?traveller=#{username}"
-      else
-        call "/api/trips_info"
-      end
+    def fellows
+      @client.fetch('fellows', :traveller => @username)
     end
     
-    def future_trips(username=nil)
-      if username
-        call "/api/future_trips_info?traveller=#{username}"
-      else
-        call "/api/future_trips_info"
-      end
+    def trips
+      @client.fetch('trips_info', :traveller => @username)
     end
     
-    def fellows_travelling_today(username=nil)
-      if username
-        call "/api/fellows_travellingtoday?traveller=#{username}"
-      else
-        call "/api/fellows_travellingtoday"
-      end
+    def future_trips
+      @client.fetch('future_trips_info', :traveller => @username)
     end
     
-    def tag(tag, username=nil)
-      if username
-        call "/api/tag?traveller=#{username}&tag=#{tag}"
-      else
-        call "/api/tag?tag=#{tag}"
-      end
+    def fellows_travelling_today
+      @client.fetch('fellows_travellingtoday', :traveller => @username)
     end
     
-    def location_on_date(date, username=nil)
-      if username
-        call "/api/location_on_date?traveller=#{username}&date=#{date}"
-      else
-        call "/api/location_on_date?date=#{date}"
-      end
+    def tag(tag)
+      @client.fetch('tag', {:traveller => @username, :tag => tag})
+    end
+    
+    def location_on_date(date)
+      @client.fetch('location_on_date', {:traveller => @username, :date => date})
     end
   end
 end

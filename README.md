@@ -1,17 +1,28 @@
 # A Ruby wrapper for the Dopplr API
 
-This simple API wrapper provides access to some of the data available in Dopplr. It is designed to work by creating instances for each object (City, Trip, Traveller, etc.) and calling their methods to return the corresponding data.
+This library provides access to some of the data available in Dopplr. It is designed to work by creating instances for each object (city, trip, traveller, etc.) and calling their methods to return the corresponding data.
 
 ## Example Usage
 
+Require the Dopplr library and create a new client and city object.
+
     require 'dopplr'
+    
+    client = Dopplr::Client.new('token')
+    vancouver = client.city('6173331')
 
-    client = Dopplr::Client.new('token') # Creates a new client with specified token.
-    client.info # Returns common information about you.
-    client.trips # Returns a listing of your trips.
+Return some data from each object.
 
-    vancouver = client.city('6173331') # Creates a new City object with specified city_id.
-    vancouver.info # Returns common info about Vancouver.
-    vancouver.tips # Returns a listing of the latest tips for Vancouver.
+    client.info
+    client.trips
+    vancouver.info
+    vancouver.tips
 
-    client.search("Chicago", :city) # Returns results of a city search for "Chicago".
+Perform a search query.
+
+    client.search("Chicago", :city)
+
+
+## Notes
+
+Use client.create\_session to turn your single-use token into a session token for unlimited use. The get\_token method for Dopplr::Client doesn't work properly at this point. Mechanize is breaking the single-use token at some point, so for now you must get a token by logging into Dopplr.

@@ -27,12 +27,7 @@ module Dopplr
     
     # Changes @token into a session token.
     def create_session
-      response = fetch('AuthSubSessionToken')
-      if response.match(/Token=(.*)/)
-        @token = $1
-        return @token
-      end
-      return response
+      @token = fetch('AuthSubSessionToken')['token']
     end
     
     # Performs a search query.

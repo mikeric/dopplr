@@ -1,4 +1,8 @@
-$: << File.expand_path(File.dirname(__FILE__))
+$: << File.dirname(__FILE__)
+
+require 'rubygems'
+require 'json'
+require 'cgi'
 
 require 'dopplr/client'
 require 'dopplr/traveller'

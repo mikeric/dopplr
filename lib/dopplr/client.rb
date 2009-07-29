@@ -7,7 +7,7 @@ module Dopplr
     end
     
     # Makes an API call with @token.
-    def fetch(path, params={})
+    def get(path, params={})
       params['format'] = 'js'
       params_uri = URI.escape(params.collect{|key,value| "#{key}=#{value}"}.join('&'))
       url = "/api/#{path}/?#{params_uri}"
@@ -27,17 +27,17 @@ module Dopplr
     
     # Changes @token into a session token.
     def create_session
-      @token = fetch('AuthSubSessionToken')['token']
+      @token = get('AuthSubSessionToken')['token']
     end
     
     # Performs a search query.
     def search(term, type=:all)
       if type == :all
-        fetch('search', :q => term)
+        get 'search', :q => term
       elsif type == :city
-        fetch('city_search', :q => term)
+        get 'city_search', :q => term
       elsif type == :traveller
-        fetch('traveller_search', :q => term)
+        get 'traveller_search', :q => term
       end
     end
     

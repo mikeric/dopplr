@@ -1,16 +1,22 @@
-module Dopplr
-  class City
-    def initialize(client, city_id)
-      @client = client
-      @id = city_id
-    end
-    
-    def info
-      @client.get 'city_info', :geoname_id => @id
-    end
-    
-    def tips
-      @client.get 'tips', :geoname_id => @id
-    end
+class City
+  attr_reader :name, :country, :timezone, :latitude, :longitude
+  attr_reader :geoname_id, :country_code, :woeid, :url
+  
+  def initialize(client, id)
+    @client = client
+    @geoname_id = id
+    populate
+  end
+  
+  def populate
+    info = @client.get('city_info', :geoname_id => @geoname_id)['city']
+    @name         = info['name']
+    @country      = info['country']
+    @timezone     = info['timezone']
+    @latitude     = info['latitude']
+    @longitude    = info['longitude']
+    @country_code = info['country_code']
+    @woeid        = info['woeid']
+    @url          = info['url']
   end
 end

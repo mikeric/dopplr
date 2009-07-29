@@ -15,7 +15,7 @@ module Dopplr
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
       http.start do |http|
-        request = Net::HTTP::Get.new(url, { 'Authorization' => 'AuthSub token="' + @token + '"' })
+        request = Net::HTTP::Get.new(url, {'Authorization' => 'AuthSub token="' + @token + '"'})
         JSON.parse(http.request(request).body)
       end
     end
@@ -43,17 +43,17 @@ module Dopplr
     
     # Returns a new City object.
     def city(city_id)
-      Dopplr::City.new(self, city_id)
+      City.new(self, city_id)
     end
     
     # Returns a new Trip object.
     def trip(trip_id)
-      Dopplr::Trip.new(self, trip_id)
+      Trip.new(self, trip_id)
     end
     
     # Returns a new Traveller object.
     def traveller(username)
-      Dopplr::Traveller.new(self, username)
+      Traveller.new(self, username)
     end
   end
 end

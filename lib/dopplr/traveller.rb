@@ -1,36 +1,23 @@
 module Dopplr
   class Traveller
+    attr_reader :username, :name, :status, :travel_today, :home_city, :current_city
+    attr_reader :icon_id, :email_sha1, :url
+    
     def initialize(client, username)
       @client = client
       @username = username
+      populate
     end
     
-    def info
-      @client.get 'traveller_info', :traveller => @username
-    end
-    
-    def fellows
-      @client.get 'fellows', :traveller => @username
-    end
-    
-    def trips
-      @client.get 'trips_info', :traveller => @username
-    end
-    
-    def future_trips
-      @client.get 'future_trips_info', :traveller => @username
-    end
-    
-    def fellows_travelling_today
-      @client.get 'fellows_travellingtoday', :traveller => @username
-    end
-    
-    def tag(tag)
-      @client.get 'tag', :traveller => @username, :tag => tag
-    end
-    
-    def location_on_date(date)
-      @client.get 'location_on_date', :traveller => @username, :date => date
+    def populate
+      info = @client.get('traveller_info', :traveller => @username)['traveller']
+      @status       = info['status']
+      @icon_id      = info['icon_id']
+      @email_sha1   = info['sha1email']
+      @url          = info['url']
+      @travel_today = info['travel_today']
+      @home_city    = City.new(@client, info['home_city']['geoname_id'])
+      @current_city = City.new(@client, info['current_city']['geoname_id'])
     end
   end
 end

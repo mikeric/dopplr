@@ -10,7 +10,7 @@ Require the Dopplr library and create some new objects.
     
     dopplr = Dopplr::Client.new('token')
     montreal = dopplr.city('6173331')
-    mike = dopplr.traveller('525522')
+    mike = dopplr.traveller('mikeric')
 
 Return some data from each object.
 

@@ -46,6 +46,11 @@ module Dopplr
       City.new(self, city_id)
     end
     
+    # I'm feeling lucky city search.
+    def find_city(name)
+      city get('city_search', :q => name)['city'][0]['geoname_id']
+    end
+    
     # Returns a new Trip object.
     def trip(trip_id)
       Trip.new(self, trip_id)
@@ -54,6 +59,11 @@ module Dopplr
     # Returns a new Traveller object.
     def traveller(username)
       Traveller.new(self, username)
+    end
+    
+    # I'm feeling lucky traveller search.
+    def find_traveller(name)
+      traveller get('city_search', :q => name)['traveller'][0]['nick']
     end
   end
 end

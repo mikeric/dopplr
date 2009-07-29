@@ -1,5 +1,5 @@
 class City
-  attr_reader :name, :country, :timezone, :latitude, :longitude
+  attr_reader :name, :country, :timezone, :localtime, :latitude, :longitude
   attr_reader :geoname_id, :country_code, :woeid, :url
   
   def initialize(client, id)
@@ -18,5 +18,6 @@ class City
     @country_code = info['country_code']
     @woeid        = info['woeid']
     @url          = info['url']
+    @localtime    = Time.parse(info['localtime'].slice(0..-7))
   end
 end

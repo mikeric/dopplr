@@ -1,28 +1,33 @@
 # A Ruby wrapper for the Dopplr API
 
-This library provides access to some of the data available in Dopplr. It is designed to work by creating instances for each object (city, trip, traveller, etc.) and calling their methods to return the corresponding data.
+This library provides access to some of the data available in Dopplr, the social atlas. It is designed to work by creating instances for each object and calling their methods to return the corresponding data.
 
 ## Example Usage
 
-Require the Dopplr library and create a new client and city object.
+Require the Dopplr library and create some new objects.
 
     require 'dopplr'
     
-    client = Dopplr::Client.new('token')
-    vancouver = client.city('6173331')
+    dopplr = Dopplr::Client.new('token')
+    montreal = dopplr.city('6173331')
+    mike = dopplr.traveller('525522')
 
 Return some data from each object.
 
-    client.info
-    client.trips
-    vancouver.info
-    vancouver.tips
+    montreal.country    #=> "Canada"
+    montreal.timezone   #=> "America/Montreal"
+    montreal.localtime  #=> Wed Jul 29 17:31:15 2009
+    montreal.latitude   #=> 45.5168
+    montreal.longitude  #=> -73.6492
+    
+    mike.name           #=> "Mike Richards"
+    mike.current_city   #=> #<City:0x59a3d0>
+    mike.status         #=> "is at home in Montreal"
+    mike.travel_today   #=> false
 
-Perform a search query.
+Find a new city object without knowing it's geoname_id (I'm feeling lucky).
 
-    client.search("Chicago", :city)
-
-
-## Notes
-
-Use client.create\_session to turn your single-use token into a session token for unlimited use. The get\_token method for Dopplr::Client doesn't work properly at this point. Mechanize is breaking the single-use token at some point, so for now you must get a token by logging into Dopplr.
+    portland = dopplr.find_city "Portland"
+    
+    portland.country    #=> "United States"
+    portland.geoname_id #=> 5746545

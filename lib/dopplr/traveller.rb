@@ -1,6 +1,6 @@
 module Dopplr
   class Traveller
-    attr_reader :username, :name, :status, :travel_today, :home_city, :current_city
+    attr_reader :username, :name, :status, :trips, :travel_today, :home_city, :current_city
     attr_reader :icon_id, :email_sha1, :url
     
     def initialize(client, username)
@@ -11,6 +11,7 @@ module Dopplr
     
     def populate
       info = @client.get('traveller_info', :traveller => @username)['traveller']
+      trips = @client.get('trips_info', :traveller => @username)['trip']
       @name         = info['name']
       @status       = info['status']
       @icon_id      = info['icon_id']
@@ -19,6 +20,7 @@ module Dopplr
       @travel_today = info['travel_today']
       @home_city    = City.new(@client, info['home_city']['geoname_id'])
       @current_city = City.new(@client, info['current_city']['geoname_id'])
+      @trips        = trips.map{|trip| Trip.new(@client, trip['id'])}
     end
   end
 end

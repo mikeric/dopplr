@@ -11,6 +11,7 @@ module Dopplr
     
     def populate
       info = @client.get('traveller_info', :traveller => @username)['traveller']
+      @name         = info['name']
       @status       = info['status']
       @icon_id      = info['icon_id']
       @email_sha1   = info['sha1email']

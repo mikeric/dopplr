@@ -1,6 +1,6 @@
 # A Ruby wrapper for the Dopplr API
 
-This library provides access to some of the data available in Dopplr, the social atlas. It is designed to work by creating instances for each object and calling their methods to return the corresponding data.
+This library provides object bindings using some of the data available in Dopplr, the social atlas. It is designed to work by creating instances for each object and calling their methods to return the corresponding data.
 
 ## Example Usage
 
@@ -9,7 +9,7 @@ Require the Dopplr library and create some new objects.
     require 'dopplr'
     
     dopplr = Dopplr::Client.new('token')
-    montreal = dopplr.city('6173331')
+    montreal = dopplr.city('6077243')
     mike = dopplr.traveller('mikeric')
 
 Return some data from each object.

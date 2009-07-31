@@ -60,10 +60,5 @@ module Dopplr
     def traveller(username)
       Traveller.new(self, username)
     end
-    
-    # I'm feeling lucky traveller search.
-    def find_traveller(name)
-      traveller get('city_search', :q => name)['traveller'][0]['nick']
-    end
   end
 end

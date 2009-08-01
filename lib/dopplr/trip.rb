@@ -16,9 +16,16 @@ module Dopplr
       @tags               = info['tag']
       @notes              = info['note']
       @url                = info['url']
-      @start              = Time.parse(info['start'])
-      @finish             = Time.parse(info['finish'])
-      @city               = City.new(@client, info['city']['geoname_id'])
+      @start              = Time.parse info['start']
+      @finish             = Time.parse info['finish']
+    end
+    
+    def city(options = {})
+      unless @city || options[:force]
+        info = @client.get('trip_info', :trip_id => @trip_id)['trip']
+        @city = City.new @client, info['city']['geoname_id']
+      end
+      @city
     end
   end
 end

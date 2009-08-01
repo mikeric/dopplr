@@ -8,6 +8,5 @@ require 'json'
 
 require 'dopplr/client'
 require 'dopplr/traveller'
-require 'dopplr/user'
 require 'dopplr/city'
 require 'dopplr/trip'

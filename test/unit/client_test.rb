@@ -17,7 +17,7 @@ class ClientTest < Test::Unit::TestCase
       
       should "have a base traveller" do
         traveller = @client.traveller
-        assert_equal traveller.nick, 'USERNAME'
+        assert_equal traveller.nick, 'mikeric'
       end
       
       should "be able to create new objects" do

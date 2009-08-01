@@ -21,7 +21,7 @@ module Dopplr
       @rgb          = info['rgb']
       @utc_offset   = info['utcoffset']
       @url          = info['url']
-      @localtime    = Time.parse(info['localtime'].slice(0..-7))
+      @localtime    = Time.parse info['localtime'].slice(0..-7)
     end
   end
 end

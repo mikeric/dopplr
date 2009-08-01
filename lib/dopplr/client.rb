@@ -61,7 +61,7 @@ module Dopplr
       if username
         Traveller.new(self, username)
       else
-        User.new(self)
+        Traveller.new(self)
       end
     end
   end

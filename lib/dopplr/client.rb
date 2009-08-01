@@ -15,7 +15,7 @@ module Dopplr
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
       http.start do |http|
-        request = Net::HTTP::Get.new(url, {'Authorization' => 'AuthSub token="' + @token + '"'})
+        request = Net::HTTP::Get.new url, 'Authorization' => "AuthSub token=\"#{@token}\""
         JSON.parse(http.request(request).body)
       end
     end
@@ -57,8 +57,12 @@ module Dopplr
     end
     
     # Returns a new Traveller object.
-    def traveller(username)
-      Traveller.new(self, username)
+    def traveller(username = nil)
+      if username
+        Traveller.new(self, username)
+      else
+        User.new(self)
+      end
     end
   end
 end

@@ -15,17 +15,21 @@ class ClientTest < Test::Unit::TestCase
         @client.token = 'TOKEN'
       end
       
-      should "be able to perform search queries" do
-        city_search = @client.search "Montreal", :city
-        assert city_search['city']
-        traveller_search = @client.search "Mike", :traveller
-        assert traveller_search['traveller']
+      should "have a base traveller" do
+        traveller = @client.traveller
+        assert_equal traveller.nick, 'USERNAME'
       end
       
       should "be able to create new objects" do
         assert @client.city 6173331
         assert @client.trip 525522
-        assert @client.traveller 'mikeric'
+      end
+      
+      should "be able to perform search queries" do
+        city_search = @client.search "Montreal", :city
+        assert city_search['city']
+        traveller_search = @client.search "Mike", :traveller
+        assert traveller_search['traveller']
       end
       
       should "be able to find a city" do

@@ -21,7 +21,7 @@ module Dopplr
     end
     
     def city(options = {})
-      unless @city || options[:force]
+      unless @city && !options[:force]
         info = @client.get('trip_info', :trip_id => @trip_id)['trip']
         @city = City.new @client, info['city']['geoname_id']
       end

@@ -21,7 +21,7 @@ module Dopplr
     end
     
     def current_city(options = {})
-      unless @current_city || options[:force]
+      unless @current_city && !options[:force]
         info = @client.get('traveller_info', @params)['traveller']
         @current_city = City.new @client, info['current_city']['geoname_id']
       end
@@ -29,7 +29,7 @@ module Dopplr
     end
     
     def home_city(options = {})
-      unless @home_city || options[:force]
+      unless @home_city && !options[:force]
         info = @client.get('traveller_info', @params)['traveller']
         @home_city = City.new @client, info['home_city']['geoname_id']
       end
@@ -37,7 +37,7 @@ module Dopplr
     end
     
     def trips(options = {})
-      unless @trips || options[:force]
+      unless @trips && !options[:force]
         trips = @client.get('trips_info', @params)['trip']
         if !trips.empty?
           @trips = trips.map do |trip|
@@ -49,7 +49,7 @@ module Dopplr
     end
     
     def fellows(options = {})
-      unless @fellows || options[:force]
+      unless @fellows && !options[:force]
         fellows = @client.get('fellows', @params)
         fellows['can_see_trips_of'].map! do |fellow|
           Traveller.new @client, fellow['nick']

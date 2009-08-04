@@ -49,28 +49,21 @@ module Dopplr
     end
     
     def fellows(options = {})
-      unless @fellows && @sharing || options[:force]
+      unless @fellows || options[:force]
         fellows = @client.get('fellows', @params)
-        if !fellows['can_see_trips_of'].empty?
-          @fellows = fellows['can_see_trips_of'].map do |fellow|
-            Traveller.new @client, fellow['nick']
-          end
+        fellows['can_see_trips_of'].map! do |fellow|
+          Traveller.new @client, fellow['nick']
         end
-        if !fellows['shows_trips_to'].empty?
-          @sharing = fellows['shows_trips_to'].map do |fellow|
-            hash = fellow.inject({}) do |memo,(k,v)|
-              memo[k.to_sym] = v
-              memo
-            end
-            Struct.new(*hash.keys).new(*hash.values_at(*hash.keys))
+        fellows['shows_trips_to'].map! do |fellow|
+          hash = fellow.inject({}) do |memo, (key, value)|
+            memo[key.to_sym] = value
+            memo
           end
+          Struct.new(*hash.keys).new(*hash.values_at(*hash.keys))
         end
+        @fellows = fellows
       end
-      if options[:sharing]
-        @sharing ||= []
-      else
-        @fellows ||= []
-      end
+      @fellows
     end
   end
 end

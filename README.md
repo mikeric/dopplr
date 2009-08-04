@@ -1,21 +1,33 @@
-# A Ruby wrapper for the Dopplr API
+# Dopplr
 
-This library provides objects for talking to some of the data available in Dopplr, The Social Atlas. It is designed to work by creating a client for the master user (that the API token belongs to), which is then used to instantiate objects in relation to that user.
+This library provides objects for talking to some of the data available in Dopplr, The Social Atlas. It is essentially a multi-user wrapping of the Dopplr API, with each object being bound to a client.
 
-## Example Usage
+## Usage
 
-Require the Dopplr library and create some new objects.
+### First things first
+
+Require the Dopplr library and create a `Dopplr::Client` instance. Return a login URL for the user to obtain a token, store the token for that user.
 
     require 'dopplr'
     
-    dopplr = Dopplr::Client.new('token')
-    
-    mike = dopplr.traveller 'mikeric'
-    chicago = dopplr.city '4887398'
-    montreal = mike.home_city
-    trip = mike.trips.first
+    client = Dopplr::Client.new             #=> #<Dopplr::Client:0x578208 ...>
+    client.login_url "http://www.you.com/"  #=> "https://www.dopplr.com/api/..."
 
-Return some data from each object.
+Now that you have a single-use token, assign it to the `Dopplr::Client` object and generate a session token.
+
+    client.token = '1a2b3c4d5e6f'     #=> '1a2b3c4d5e6f'
+    client.create_session             #=> '3c4d5e6f1a2b'
+
+### Instantiating and working with objects
+
+All Dopplr objects are created using the client as a base, you can then branch of from them to dig deeper.
+
+    mike      = client.traveller      #=> Dopplr::Traveller for the token holder
+    chicago   = client.city 4887398   #=> Dopplr::City for ID 4887398
+    montreal  = mike.home_city        #=> Dopplr::City for mike's home city
+    trip      = mike.trips.first      #=> Dopplr::Trip for mike's first trip
+
+Return some basic information about each object.
 
     montreal.country      #=> "Canada"
     montreal.timezone     #=> "America/Montreal"
@@ -33,9 +45,16 @@ Return some data from each object.
     trip.start            #=> Sat Feb 16 00:00:00 2008
     trip.return_transport #=> "plane"
 
-Find a new city object without knowing it's geoname_id (I'm feeling lucky).
+Get trips and fellows for a particular traveller.
 
-    portland = dopplr.find_city "Portland"
+    mike.trips            #=> [#<Dopplr::Trip:0x56f4a0 ...>, ...]
+    
+    mike.fellows          #=> {:can_see_trips_of => [#<Dopplr::Traveller:0x570954 ...>, ...],
+                               :shows_trips_to => [#<Dopplr::Traveller:0x59e8b1 ...> ...]}
+
+Return a new `Dopplr::City` object without knowing the geoname_id (I'm feeling lucky).
+
+    portland = client.find_city "Portland"
     
     portland.country      #=> "United States"
     portland.geoname_id   #=> 5746545

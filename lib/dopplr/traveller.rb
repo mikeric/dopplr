@@ -61,7 +61,10 @@ module Dopplr
           end
           Struct.new(*hash.keys).new(*hash.values_at(*hash.keys))
         end
-        @fellows = fellows
+        @fellows = fellows.inject({}) do |memo, (key, value)|
+          memo[key.to_sym] = value
+          memo
+        end
       end
       @fellows
     end

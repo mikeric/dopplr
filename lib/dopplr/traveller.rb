@@ -39,13 +39,21 @@ module Dopplr
     def trips(options = {})
       unless @trips && !options[:force]
         trips = @client.get('trips_info', @params)['trip']
-        if !trips.empty?
-          @trips = trips.map do |trip|
-            Trip.new @client, trip['id']
-          end
+        @trips = trips.map do |trip|
+          Trip.new @client, trip['id']
         end
       end
-      @trips ||= []
+      @trips
+    end
+    
+    def future_trips(options = {})
+      unless @future_trips && !options[:force]
+        trips = @client.get('future_trips_info', @params)['trip']
+        @future_trips = trips.map do |trip|
+          Trip.new @client, trip['id']
+        end
+      end
+      @future_trips
     end
     
     def fellows(options = {})
@@ -67,6 +75,19 @@ module Dopplr
         end
       end
       @fellows
+    end
+    
+    def location_on_date(date)
+      location = @client.get('location_on_date', @params.merge(:date => date))['location']
+      location['home'] = City.new(@client, location['home']['geoname_id'])
+      if location['trip']
+        location['trip'] = Trip.new(@client, location['trip']['id'])
+      end
+      location = location.inject({}) do |memo, (key, value)|
+        memo[key.to_sym] = value
+        memo
+      end
+      location
     end
   end
 end

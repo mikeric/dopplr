@@ -32,5 +32,10 @@ module Dopplr
       info = @client.post 'add_trip_tags', :trip_id => @trip_id, :tags => tags.join('+')
       @tags = info['trip']['tag']
     end
+    
+    def add_note(note)
+      info = @client.post 'add_trip_note', :trip_id => @trip_id, :body => note
+      @notes = info['trip']['note']
+    end
   end
 end

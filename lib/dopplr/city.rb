@@ -23,5 +23,9 @@ module Dopplr
       @url          = info['url']
       @localtime    = Time.parse info['localtime'].slice(0..-7)
     end
+    
+    def add_trip(start, finish)
+      @client.post 'add_trip', :geoname_id => @geoname_id, :start => start, :finish => finish
+    end
   end
 end

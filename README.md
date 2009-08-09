@@ -18,9 +18,9 @@ Now that you have a single-use token, assign it to the `Dopplr::Client` object a
     client.token = '1a2b3c4d5e6f'     #=> '1a2b3c4d5e6f'
     client.create_session             #=> '3c4d5e6f1a2b'
 
-### Instantiating and working with objects
+### Instantiating and returning data from objects
 
-All Dopplr objects are created using the client as a base, you can then branch of from them to dig deeper.
+All Dopplr objects are created using the client as a base.
 
     mike      = client.traveller      #=> Dopplr::Traveller for the token holder
     chicago   = client.city 4887398   #=> Dopplr::City for ID 4887398
@@ -58,3 +58,22 @@ Return a new `Dopplr::City` object without knowing the geoname_id (I'm feeling l
     
     portland.country      #=> "United States"
     portland.geoname_id   #=> 5746545
+
+### Working with and creating new trip data
+
+Plan a new trip to Portland, OR.
+
+    portland.add_trip('2010-01-12', '2010-01-19')
+    portland_trip = mike.future_trips.last
+    
+    portland_trip.start           #=> Tue Jan 12 00:00:00 2010
+    portland_trip.city.latitude   #=> 45.5235
+
+Add some tags and a note to your trip.
+
+    portland_trip.add_tags :work, :meetup
+    portland_trip.add_note "Staying for a week, then heading back home."
+
+Trip got canceled? Delete it.
+
+    portland_trip.delete

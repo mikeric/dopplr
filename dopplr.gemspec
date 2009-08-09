@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{dopplr}
-  s.version = "0.1.0"
+  s.version = "0.2.0"
   
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mike Richards"]
-  s.date = %q{2009-08-06}
+  s.date = %q{2009-08-09}
   s.summary = %q{A Ruby library for talking to the Dopplr API}
   s.homepage = %q{http://github.com/mikeric/dopplr}
   s.email = %q{mike22e@gmail.com}

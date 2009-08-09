@@ -37,5 +37,9 @@ module Dopplr
       info = @client.post 'add_trip_note', :trip_id => @trip_id, :body => note
       @notes = info['trip']['note']
     end
+    
+    def delete
+      @client.post 'delete_trip', :trip_id => @trip_id
+    end
   end
 end

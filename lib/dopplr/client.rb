@@ -6,18 +6,27 @@ module Dopplr
       @token = token
     end
     
-    # Makes an API call with @token.
+    # GET request with @token.
     def get(path, params={})
       params['format'] = 'js'
-      params_uri = URI.escape(params.collect{|key,value| "#{key}=#{value}"}.join('&'))
-      url = "/api/#{path}/?#{params_uri}"
+      url = "/api/#{path}/?#{URI.escape(params.collect{|key,value| "#{key}=#{value}"}.join('&'))}"
       http = Net::HTTP.new("www.dopplr.com", 443)
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-      http.start do |http|
-        request = Net::HTTP::Get.new url, 'Authorization' => "AuthSub token=\"#{@token}\""
-        JSON.parse(http.request(request).body)
-      end
+      responce, data = http.get(url, 'Authorization' => "AuthSub token=\"#{@token}\"")
+      JSON.parse(data)
+    end
+    
+    # POST request with @token.
+    def post(path, params={})
+      params['format'] = 'js'
+      data_string = URI.escape(params.collect{|key,value| "#{key}=#{value}"}.join('&'))
+      url = "/api/#{path}"
+      http = Net::HTTP.new("www.dopplr.com", 443)
+      http.use_ssl = true
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      response, data = http.post(url, data_string, 'Authorization' => "AuthSub token=\"#{@token}\"")
+      JSON.parse(data)
     end
     
     # Returns a URL for getting a token.

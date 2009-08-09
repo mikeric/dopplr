@@ -27,5 +27,10 @@ module Dopplr
       end
       @city
     end
+    
+    def add_tags(*tags)
+      info = @client.post 'add_trip_tags', :trip_id => @trip_id, :tags => tags.join('+')
+      @tags = info['trip']['tag']
+    end
   end
 end

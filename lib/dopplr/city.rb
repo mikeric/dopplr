@@ -1,27 +1,29 @@
 module Dopplr
   class City
-    attr_reader :name, :country, :timezone, :localtime, :latitude, :longitude
-    attr_reader :geoname_id, :country_code, :woeid, :rgb, :utc_offset, :url
+    attr_reader :name, :region, :country, :timezone, :localtime, :latitude, :longitude,
+      :geoname_id, :country_code, :woeid, :rgb, :utc_offset, :url, :mobile_url
     
-    def initialize(client, id)
+    def initialize(client, id, source=nil)
       @client = client
       @geoname_id = id
-      populate
+      populate(source)
     end
     
-    def populate
-      info = @client.get('city_info', :geoname_id => @geoname_id)['city']
+    def populate(source)
+      info = source || @client.get('/city_info', :geoname_id => @geoname_id)['city_info']
       @name         = info['name']
+      @region       = info['region']
       @country      = info['country']
       @timezone     = info['timezone']
-      @latitude     = info['latitude']
-      @longitude    = info['longitude']
+      @latitude     = info['lat']
+      @longitude    = info['lng']
       @country_code = info['country_code']
       @woeid        = info['woeid']
       @rgb          = info['rgb']
       @utc_offset   = info['utcoffset']
-      @url          = info['url']
-      @localtime    = Time.parse info['localtime'].slice(0..-7)
+      @url          = info['dopplr_url']
+      @mobile_url   = info['mobile_url']
+      @localtime    = Time.parse(info['localtime'].slice(0..-7))
     end
     
     def add_trip(start, finish)

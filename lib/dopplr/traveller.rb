@@ -10,7 +10,7 @@ module Dopplr
     end
     
     def populate
-      info = @client.get('traveller_info', @params)['traveller']
+      info = @client.get('/traveller_info', @params)['traveller_info']
       @nick         = info['nick']
       @name         = info['name']
       @status       = info['status']

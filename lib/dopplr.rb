@@ -1,11 +1,12 @@
 $: << File.dirname(__FILE__)
 
 require 'rubygems'
-require 'net/https'
+require 'oauth'
 require 'json'
 require 'time'
 
-require 'dopplr/client'
+require 'dopplr/base'
+require 'dopplr/oauth'
 require 'dopplr/traveller'
 require 'dopplr/city'
 require 'dopplr/trip'

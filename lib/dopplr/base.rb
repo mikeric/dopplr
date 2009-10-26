@@ -6,7 +6,7 @@ module Dopplr
       @client = client
     end
     
-    def traveller(username=nil)
+    def traveller(username)
       Traveller.new(client, username)
     end
     

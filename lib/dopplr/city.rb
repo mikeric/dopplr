@@ -1,11 +1,11 @@
 module Dopplr
   class City
     attr_reader :name, :region, :country, :timezone, :localtime, :latitude, :longitude,
-      :geoname_id, :country_code, :woeid, :rgb, :utc_offset, :url, :mobile_url
+      :geoname_id, :country_code, :woeid, :rgb, :utc_offset, :dopplr_url, :mobile_url
     
-    def initialize(client, id, source=nil)
+    def initialize(client, geoname_id, source = nil)
       @client = client
-      @geoname_id = id
+      @geoname_id = geoname_id
       populate(source)
     end
     
@@ -21,7 +21,7 @@ module Dopplr
       @woeid        = info['woeid']
       @rgb          = info['rgb']
       @utc_offset   = info['utcoffset']
-      @url          = info['dopplr_url']
+      @dopplr_url   = info['dopplr_url']
       @mobile_url   = info['mobile_url']
       @localtime    = Time.parse(info['localtime'].slice(0..-7))
     end

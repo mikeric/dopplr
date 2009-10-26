@@ -11,7 +11,7 @@ class CityTest < Test::Unit::TestCase
       @city = @dopplr.city(5746545)
     end
     
-    should "have populated attributes upon initialize" do
+    should "populate attributes upon initialize" do
       assert_equal 'Portland',      @city.name
       assert_equal 'OR',            @city.region
       assert_equal 'United States', @city.country

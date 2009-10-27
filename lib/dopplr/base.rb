@@ -13,5 +13,9 @@ module Dopplr
     def city(geoname_id)
       City.new(client, geoname_id)
     end
+    
+    def place(place_id)
+      Place.new(client, place_id)
+    end
   end
 end

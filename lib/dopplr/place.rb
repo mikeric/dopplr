@@ -27,9 +27,5 @@ module Dopplr
       @short_url    = info['short_url']
       @city         = City.new(@client, info['city']['geoname_id'], info['city'])
     end
-    
-    def add_trip(start, finish)
-      @client.post 'add_trip', :geoname_id => @geoname_id, :start => start, :finish => finish
-    end
   end
 end

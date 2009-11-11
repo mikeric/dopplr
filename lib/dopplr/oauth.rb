@@ -26,13 +26,14 @@ module Dopplr
     end
     
     def get(resource, params={})
-      params_string = URI.escape(params.collect{|k,v| "#{k}=#{v}"}.join('&'))
-      request = access_token.get "/oauthapi#{resource}?#{params_string}"
+      params_string = params.collect{|k, v| "#{k}=#{v.is_a?(Array) ? v.join(', ') : v}"}.join('&')
+      request = access_token.get("/oauthapi#{resource}?#{URI.escape(params_string)}")
       JSON.parse(request.body)
     end
     
     def post(resource, params={})
-      request = access_token.post "/oauthapi#{resource}", params
+      params.each {|k, v| params[k] = v.join(', ') if v.is_a?(Array)}
+      request = access_token.post("/oauthapi#{resource}", params)
       JSON.parse(request.body)
     end
   end

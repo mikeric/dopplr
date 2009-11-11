@@ -8,7 +8,7 @@ class PlaceSearchTest < Test::Unit::TestCase
       oauth.authorize_from_access('token', 'secret')
       
       @dopplr = Dopplr::Base.new(oauth)
-      @place_search = @dopplr.place_search(:bbox => "30, -80, 50, -70")
+      @place_search = @dopplr.place_search(:bbox => [30, -80, 50, -70])
     end
     
     should "return populated place objects for results" do

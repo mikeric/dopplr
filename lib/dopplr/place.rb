@@ -25,7 +25,7 @@ module Dopplr
       @url          = info['url']
       @dopplr_url   = info['dopplr_url']
       @short_url    = info['short_url']
-      @city         = City.new(@client, info['city']['geoname_id'], info['city'])
+      @city         = City.new(@client, info['city']['geoname_id'], info['city']) if info['city']
     end
   end
 end

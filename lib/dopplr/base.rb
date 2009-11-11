@@ -17,5 +17,13 @@ module Dopplr
     def place(place_id)
       Place.new(client, place_id)
     end
+    
+    def city_search(params={})
+      CitySearch.new(client, params)
+    end
+    
+    def place_search(params={})
+      PlaceSearch.new(client, params)
+    end
   end
 end

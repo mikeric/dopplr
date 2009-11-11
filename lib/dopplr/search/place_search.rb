@@ -6,7 +6,7 @@ module Dopplr
     end
     
     def results
-      response = @client.get('/place_search', @params)
+      response = @client.post('/place_search', @params)
       raise response['error']['message'] if response['error']
       
       response['place_search']['results'].map do |place|

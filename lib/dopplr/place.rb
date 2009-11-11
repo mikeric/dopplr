@@ -10,7 +10,7 @@ module Dopplr
     end
     
     def populate(source)
-      info = source || @client.get('/place_info', :place_id => @place_id)['place_info']
+      info = source || @client.post('/place_info', :place_id => @place_id)['place_info']
       @name         = info['name']
       @kind         = info['kind']
       @address      = info['address']

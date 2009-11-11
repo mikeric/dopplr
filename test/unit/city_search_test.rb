@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../helpers'
 class CitySearchTest < Test::Unit::TestCase
   context "city search" do
     setup do
-      stub_request(:get, '/city_search?q=montreal', 'city_search.json')
+      stub_post '/city_search', 'city_search.json'
       oauth = Dopplr::OAuth.new('token', 'secret')
       oauth.authorize_from_access('token', 'secret')
       

@@ -23,5 +23,11 @@ module Dopplr
       @short_url    = info['short_url']
       @mobile_url   = info['mobile_url']
     end
+    
+    def places(params = {})
+      @client.post('/traveller_places', params.merge(:traveller => @username, :extra => 'place'))['traveller_places']['results'].map do |place|
+        TravellerPlace.new(@client, place['traveller_place_id'], place)
+      end
+    end
   end
 end

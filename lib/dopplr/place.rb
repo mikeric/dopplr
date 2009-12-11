@@ -1,6 +1,6 @@
 module Dopplr
   class Place
-    attr_reader :name, :kind, :address, :phone, :geohash, :latitude, :longitude,
+    attr_reader :place_id, :name, :kind, :address, :phone, :geohash, :latitude, :longitude,
       :green_blocks, :vote, :links, :tags, :url, :dopplr_url, :short_url, :city
     
     def initialize(client, place_id, source = nil)

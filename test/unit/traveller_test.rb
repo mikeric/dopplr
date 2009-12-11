@@ -18,5 +18,14 @@ class TravellerTest < Test::Unit::TestCase
       assert_equal '0',         @traveller.share_trips
       assert_equal '1',         @traveller.see_trips
     end
+    
+    should "return an array of traveller places that they've been to" do
+      stub_post '/traveller_places', 'traveller_places.json'
+      
+      @traveller.places.each do |place|
+        assert_instance_of  Dopplr::TravellerPlace, place
+        assert_equal        "visited",              place.vote
+      end
+    end
   end
 end

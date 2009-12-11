@@ -18,5 +18,10 @@ class CityTest < Test::Unit::TestCase
       assert_equal 45.5235,         @city.latitude
       assert_equal -122.676,        @city.longitude
     end
+    
+    should "return a time object for localtime" do
+      assert_instance_of  Time, @city.localtime
+      assert_equal        15,   @city.localtime.hour
+    end
   end
 end

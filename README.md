@@ -1,37 +1,78 @@
-# Dopplr
+# dopplr
 
-An abstraction library providing objects to interact with the Dopplr API. Essentially a multi-user wrapping of the API, with each object being bound to a client.
+An abstraction library providing objects to interact with the Dopplr API. It is essentially a multi-user wrapper with each object being bound to a client. The current master is organically changing with the new API specification, and so it may be unstable. Please refer to the **authsub** tag for the old API (dopplr 0.2.0).
+
+## Install
+
+    gem install dopplr
 
 ## Usage
 
-### First things first
+Here are some examples of how to use a few of the objects available. For a full reference, you need to read the tests and source code for now, at least until the Dopplr API spec is finalized.
 
-Create a `Dopplr::OAuth` instance with your consumer token and secret. Provided that you've obtained an access token already, authorize the client using your access token. Create a `Dopplr::Base` instance using the authorized OAuth client.
+### Dopplr::OAuth
 
-    client = Dopplr::OAuth.new('ctoken', 'csecret')
-    client.authorize_from_access('atoken', 'asecret')
+Create a **Dopplr::OAuth** instance with your consumer token and secret. Authorize the client using your access token, provided that you've already obtained one. Create a **Dopplr::Base** instance using the authorized OAuth client.
+
+    client = Dopplr::OAuth.new('1a2b3c4d5e', '2a3b4c5d6e')
+    client.authorize_from_access('3a4b5c6d7e', '4a5b6c7d8e')
     
     dopplr = Dopplr::Base.new(client)
 
-### Instantiating objects
+### Dopplr::Base
 
-For convenience, all Dopplr objects should be initialized through a `Dopplr::Base` instance. However, you could also instantiate them directly by passing a client as an arguement.
+**Dopplr::Base** is used for searching, creating, and chaining objects. However, you could also instantiate and use the objects directly by passing the client as an argument. As such, the following groups of statements are equivalent.
 
-    dopplr.traveller('johnsmith')               #=> Dopplr::Traveller for 'johnsmith'
     dopplr.city(4887398)                        #=> Dopplr::City for ID 4887398
+    dopplr.traveller('jonsmith')                #=> Dopplr::Traveller for 'jonsmith'
     
-    Dopplr::Traveller.new(client, 'johnsmith')  #=> Dopplr::Traveller for 'johnsmith'
     Dopplr::City.new(client, 4887398)           #=> Dopplr::City for ID 4887398
+    Dopplr::Traveller.new(client, 'jonsmith')   #=> Dopplr::Traveller for 'jonsmith'
 
-Return some data for each object.
+**Dopplr::Base** is also used for adding some of the high level objects such as places that you've been and trips you've taken.
 
-    city.country        #=> "United States"
-    city.timezone       #=> "America/Chicago"
-    city.localtime      #=> Wed Jul 22 09:30:15 2009
-    city.url            #=> "http://www.dopplr.com/place/us/il/chicago"
-    city.latitude       #=> 41.85
-    city.longitude      #=> -87.6501
-                        
-    john.surname        #=> "Smith"
-    john.muted          #=> false
-    john.places         #=> [#<Dopplr::TravellerPlace:0x56f4a0 ...>, ...]
+    dopplr.add_place(
+      'kj41',
+      :note => 'Central Park is notably the most-visited urban park in the US.',
+      :vote => 'liked'
+    )
+    
+    dopplr.add_trip(
+      5746545,
+      :start => '2010-01-15',
+      :finish => '2010-02-01',
+      :outgoing_transport_type => 'plane'
+    )
+
+### Dopplr::City
+
+    chicago = dopplr.city(4887398)
+
+    chicago.country        #=> 'United States'
+    chicago.timezone       #=> 'America/Chicago'
+    chicago.localtime      #=> Wed Jul 22 09:30:15 2009
+    chicago.url            #=> 'http://www.dopplr.com/place/us/il/chicago'
+    chicago.latitude       #=> 41.85
+    chicago.longitude      #=> -87.6501
+
+### Dopplr::Traveller
+
+    jon = dopplr.traveller('jonsmith')
+    
+    jon.surname       #=> 'Smith'
+    jon.muted         #=> false
+    jon.places        #=> [#<Dopplr::TravellerPlace:0x56f4a0 ...>, ...]
+    
+    jon.fellow        # Shares the trips of the logged-in user with that traveller
+    jon.mute          # Mutes that traveller
+
+### Dopplr::Place
+
+    place = dopplr.place('kj41')
+    
+    place.kind                  #=> 'explore'
+    place.green_blocks          #=> 5
+    place.vote                  #=> 'liked'
+    place.tags                  #=> ['NYC','park','walk']
+    
+    place.report('complaint')   # Report a complaint about that place

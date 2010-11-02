@@ -24,7 +24,14 @@ Gem::Specification.new do |s|
              "lib/dopplr/traveller.rb",
              "lib/dopplr/traveller_place.rb",             
              "test/helpers.rb",
-             "test/unit/client_test.rb"]
+             "test/unit/base_test.rb",
+             "test/unit/city_search_test.rb",
+             "test/unit/city_test.rb",     
+             "test/unit/oauth_test.rb",
+             "test/unit/place_search_test.rb",
+             "test/unit/place_test.rb",
+             "test/unit/traveller_place_test.rb",
+             "test/unit/traveller_test.rb"]
   
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION

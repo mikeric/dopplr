@@ -14,12 +14,24 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.files = ["README.md",
              "lib/dopplr.rb",
-             "lib/dopplr/client.rb",
+             "lib/dopplr/base.rb",
              "lib/dopplr/city.rb",
+             "lib/dopplr/oauth.rb",
+             "lib/dopplr/place.rb",
+             "lib/dopplr/search.rb",
+             "lib/dopplr/search/city_search.rb",
+             "lib/dopplr/search/place_search.rb",
              "lib/dopplr/traveller.rb",
-             "lib/dopplr/trip.rb",
+             "lib/dopplr/traveller_place.rb",             
              "test/helpers.rb",
-             "test/unit/client_test.rb"]
+             "test/unit/base_test.rb",
+             "test/unit/city_search_test.rb",
+             "test/unit/city_test.rb",     
+             "test/unit/oauth_test.rb",
+             "test/unit/place_search_test.rb",
+             "test/unit/place_test.rb",
+             "test/unit/traveller_place_test.rb",
+             "test/unit/traveller_test.rb"]
   
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION

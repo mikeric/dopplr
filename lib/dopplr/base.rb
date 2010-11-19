@@ -10,7 +10,7 @@ module Dopplr
       City.new(client, geoname_id)
     end
     
-    def traveller(username)
+    def traveller(username = nil)
       Traveller.new(client, username)
     end
     

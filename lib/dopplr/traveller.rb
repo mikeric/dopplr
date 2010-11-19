@@ -3,14 +3,19 @@ module Dopplr
     attr_reader :nick, :forename, :surname, :share_trips, :see_trips,
       :email_sha1, :url, :dopplr_url, :short_url, :mobile_url, :muted
     
-    def initialize(client, username, source = nil)
+    def initialize(client, username = nil, source = nil)
       @client = client
       @username = username
       populate(source)
     end
     
     def populate(source)
-      info = source || @client.post('/traveller_info', :traveller => @username)['traveller_info']
+      unless @username.nil?
+        info = source || @client.post('/traveller_info', :traveller => @username)['traveller_info']
+      else
+        info = source || @client.post('/whoami')['whoami']
+      end
+      @username     = info['nick'] if @username.nil?
       @nick         = info['nick']
       @forename     = info['forename']
       @surname      = info['surname']

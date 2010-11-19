@@ -1,6 +1,6 @@
 module Dopplr
   class Trip
-    attr_reader :trip_id, :nick, :start, :finish, :public_note, :private_note, :city, :geoname_id, :outgoing_transport_type, :return_transport_type, :dopplr_url, :mobile_url
+    attr_reader :trip_id, :nick, :start, :finish, :public_note, :private_note, :geoname_id, :outgoing_transport_type, :return_transport_type, :dopplr_url, :mobile_url
     
     def initialize(client, trip_id, source = nil)
       @client = client

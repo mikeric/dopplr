@@ -23,7 +23,7 @@ module Dopplr
       @utc_offset   = info['utcoffset']
       @dopplr_url   = info['dopplr_url']
       @mobile_url   = info['mobile_url']
-      @localtime    = Time.parse(info['localtime'].slice(0..-7))
+      @localtime    = Time.parse(info['localtime'].slice(0..9))
     end
   end
 end

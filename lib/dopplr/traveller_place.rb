@@ -12,8 +12,8 @@ module Dopplr
       info = source || @client.post('/traveller_place', :traveller_place_id => @traveller_place_id)['traveller_place']
       @place_id     = info['place_id']
       @vote         = info['vote']
-      @datetime     = Time.parse(info['datetime'].slice(0..-7))
-      @updated      = Time.parse(info['updated'].slice(0..-7))
+      @datetime     = Time.parse(info['datetime'].slice(0..9))
+      @updated      = Time.parse(info['updated'].slice(0..9))
       @place        = Place.new(@client, info['place']['place_id'], info['place']) if info['place']
     end
   end

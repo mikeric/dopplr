@@ -2,10 +2,10 @@
 
 Gem::Specification.new do |s|
   s.name = %q{dopplr}
-  s.version = "0.2.0"
+  s.version = "0.3.0"
   
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Mike Richards"]
+  s.authors = ["Mike Richards", "Alex Kremer"]
   s.date = %q{2009-08-09}
   s.summary = %q{A Ruby library for talking to the Dopplr API}
   s.homepage = %q{http://github.com/mikeric/dopplr}
@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
              "lib/dopplr/search/place_search.rb",
              "lib/dopplr/traveller.rb",
              "lib/dopplr/traveller_place.rb",             
+             "lib/dopplr/trip.rb",             
              "test/helpers.rb",
              "test/unit/base_test.rb",
              "test/unit/city_search_test.rb",

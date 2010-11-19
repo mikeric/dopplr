@@ -29,5 +29,11 @@ module Dopplr
         TravellerPlace.new(@client, place['traveller_place_id'], place)
       end
     end
+    
+    def trips(params = {})
+      @client.post('/trip_search', params.merge(:traveller => @username))['trip_search']['results'].map do |trip|
+        Trip.new(@client, trip['trip_id'], trip)
+      end
+    end
   end
 end

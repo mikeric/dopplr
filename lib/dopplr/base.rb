@@ -18,6 +18,10 @@ module Dopplr
       Place.new(client, place_id)
     end
     
+    def trip(trip_id)
+      Trip.new(client, trip_id)
+    end
+    
     def add_place(place_id, params = {})
       client.post '/traveller_add_place', params.merge(:place_id => place_id)
     end

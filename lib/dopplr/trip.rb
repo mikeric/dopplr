@@ -12,8 +12,8 @@ module Dopplr
       info = source || @client.post('/trip_info', :trip_id => @trip_id)['trip_info']
       @trip_id                    = info['trip_id']
       @nick                       = info['nick']
-      @start                      = Time.parse(info['start'].slice(0..9))
-      @finish                     = Time.parse(info['finish'].slice(0..9))
+      @start                      = Date.parse(info['start'].slice(0..9))
+      @finish                     = Date.parse(info['finish'].slice(0..9))
       @public_note                = info['public_note']
       @private_note               = info['private_note']
       @geoname_id                 = info['geoname_id']

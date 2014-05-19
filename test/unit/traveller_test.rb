@@ -27,5 +27,14 @@ class TravellerTest < Test::Unit::TestCase
         assert_equal        "visited",              place.vote
       end
     end
+    
+    should "return an array of the user's trips" do
+      stub_post '/trip_search', 'trip_search.json'
+      
+      @traveller.trips.each do |trip|
+        assert_instance_of  Dopplr::Trip, trip
+        assert_equal        "plane",      trip.return_transport_type
+      end
+    end
   end
 end

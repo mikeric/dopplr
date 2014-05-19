@@ -1,10 +1,10 @@
 {
-    "traveller_info": {
+    "whoami": {
         "mobile_url": "http://www.dopplr.com/mobile/johnsmith/traveller",
         "short_url": "http://dplr.it/t/johnsmith",
         "muted": "0",
         "nick": "johnsmith",
-        "share_trips": "0",
+        "share_trips": "1",
         "sha1email": "8a2dbaceb7cac40aa1e71f464b06441f199ea871",
         "dopplr_url": "http://www.dopplr.com/traveller/johnsmith",
         "surname": "Smith",

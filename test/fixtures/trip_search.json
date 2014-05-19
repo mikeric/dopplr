@@ -1,0 +1,36 @@
+{
+    "trip_search": {
+        "results": [{
+            "return_transport_type": "plane",
+            "mobile_url": "http://www.dopplr.com/mobile/johnsmith/trip/123456",
+            "trip_id": "abcd",
+            "finish": "2010-12-06T23:59:59",
+            "short_url": "http://dplr.it/trip/abcd",
+            "nick": "johnsmith",
+            "dopplr_url": "http://www.dopplr.com/trip/johnsmith/123456",
+            "outgoing_transport_type": "plane",
+            "tags": [],
+            "private_note": "",
+            "start": "2010-12-02T00:00:00",
+            "geoname_id": 5128581
+        },
+        {
+            "return_transport_type": "plane",
+            "mobile_url": "http://www.dopplr.com/mobile/johnsmith/trip/123457",
+            "trip_id": "abcf",
+            "finish": "2010-12-09T23:59:59",
+            "short_url": "http://dplr.it/trip/abcf",
+            "nick": "johnsmith",
+            "dopplr_url": "http://www.dopplr.com/trip/johnsmith/123457",
+            "outgoing_transport_type": "plane",
+            "tags": [],
+            "private_note": "",
+            "start": "2010-12-07T00:00:00",
+            "geoname_id": 5368361
+        }],
+        "total": 2,
+        "page": 1,
+        "pages": 1,
+        "per_page": 20
+    }
+}

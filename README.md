@@ -24,10 +24,10 @@ Create a **Dopplr::OAuth** instance with your consumer token and secret. Authori
 **Dopplr::Base** is used for searching, creating, and chaining objects. However, you could also instantiate and use the objects directly by passing the client as an argument. As such, the following groups of statements are equivalent.
 
     dopplr.city(4887398)                        #=> Dopplr::City for ID 4887398
-    dopplr.traveller('jonsmith')                #=> Dopplr::Traveller for 'jonsmith'
+    dopplr.traveller('johnsmith')               #=> Dopplr::Traveller for 'johnsmith'
     
     Dopplr::City.new(client, 4887398)           #=> Dopplr::City for ID 4887398
-    Dopplr::Traveller.new(client, 'jonsmith')   #=> Dopplr::Traveller for 'jonsmith'
+    Dopplr::Traveller.new(client, 'johnsmith')  #=> Dopplr::Traveller for 'johnsmith'
 
 **Dopplr::Base** is also used for adding some of the high level objects such as places that you've been and trips you've taken.
 
@@ -57,11 +57,12 @@ Create a **Dopplr::OAuth** instance with your consumer token and secret. Authori
 
 ### Dopplr::Traveller
 
-    jon = dopplr.traveller('jonsmith')
+    jon = dopplr.traveller('johnsmith')
     
     jon.surname       #=> 'Smith'
     jon.muted         #=> false
     jon.places        #=> [#<Dopplr::TravellerPlace:0x56f4a0 ...>, ...]
+	jon.trips		  #=> [#<Dopplr::Trip:0x1053 ...>, ...]
     
     jon.fellow        # Shares the trips of the logged-in user with that traveller
     jon.mute          # Mutes that traveller
@@ -76,3 +77,14 @@ Create a **Dopplr::OAuth** instance with your consumer token and secret. Authori
     place.tags                  #=> ['NYC','park','walk']
     
     place.report('complaint')   # Report a complaint about that place
+
+### Dopplr::Trip
+
+	trip = dopplr.trip('abcd')
+	
+	trip.start						#=> Mon Dec 06 00:00:00 +0100 2010
+	trip.finish						#=> Thu Dec 09 00:00:00 +0100 2010
+	trip.geoname_id					#=> 4887398
+	trip.public_note				#=> "My trip notes"
+	trip.outgoing_transport_type 	#=>	"plane"
+	trip.dopplr_url					#=> "http://www.dopplr.com/trip/johnsmith/1234567"			
